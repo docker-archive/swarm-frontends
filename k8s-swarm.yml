@@ -1,0 +1,31 @@
+etcd:  
+  image: gcr.io/google_containers/etcd:2.0.9
+  container_name: etcd
+  command: ['/usr/local/bin/etcd', '--bind-addr=0.0.0.0:4001', '--data-dir=/var/etcd/data']
+
+apiserver:  
+  image: geku/hyperkube:v1.0.1
+  container_name: apiserver
+  ports:
+    - "8080"
+  command: ["/hyperkube", "apiserver", "--service-cluster-ip-range=172.17.17.1/24", "--address=0.0.0.0", "--etcd_servers=http://etcd:4001", "--cluster_name=kubernetes", "--v=2"]
+
+controller:  
+  image: geku/hyperkube:v1.0.1
+  command: ["/hyperkube", "controller-manager", "--master=http://apiserver:8080", "--v=2"]
+
+scheduler:  
+  image: geku/hyperkube:v1.0.1
+  command: ["/hyperkube", "scheduler", "--master=http://apiserver:8080", "--v=2"]
+
+kubelet:  
+  image: geku/hyperkube:v1.0.1
+  command: ['/hyperkube', 'kubelet', '--api_servers=http://apiserver:8080', '--v=2', '--address=0.0.0.0', '--enable_server', '--allow-privileged']
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  privileged: true
+
+proxy:  
+  image: geku/hyperkube:v1.0.1
+  command: ['/hyperkube', 'proxy', '--master=http://apiserver:8080', '--v=2']
+  privileged: true
