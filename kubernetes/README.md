@@ -48,4 +48,6 @@ This is a base Compose file but it can be used to tweak a complete Production de
 
 Known issues are mainly the kubelet running in `privileged` mode. It is supposed to live on the Node so this might limit some capabilities/use cases. It does not prevent using the additional Kubernetes concepts on top of Swarm though.
 
-A needed enhancement is also the use of ACLs to deploy the Kubernetes cluster with Swarm. This allows an admin user to deploy the cluster and regular users will not be able to delete the kubernetes components (It's in the work in [Swarm #1366](https://github.com/docker/swarm/pull/1366))
+One main limitation is also the networking of containers created on top of a Kubernetes cluster living inside an overlay network. The mapping of virtual IPs to Internal cluster Ips accessible from other services through the Proxy is not yet clear without using external tools (interlock, etc.), and even in this case, `docker inspect` does not list Networking informations for containers created with Kubernetes. Integration to use Network labels for Pods with libnetwork can also greatly improve the experience (see [Kubernetes #10166](https://github.com/kubernetes/kubernetes/issues/10166)).
+
+A needed enhancement on the Swarm side is the use of ACLs to deploy the Kubernetes cluster. This allows an admin user to deploy the cluster and regular users will not be able to delete the kubernetes components (It's in the work in [Swarm #1366](https://github.com/docker/swarm/pull/1366))
