@@ -42,6 +42,7 @@ proxy:
   image: gcr.io/google_containers/hyperkube:v1.0.7
   command: ['/hyperkube', 'proxy', '--master=http://apiserver:8080', '--v=2']
   privileged: true
-  # A proxy should run alongside another kubelet
+  # A proxy should run alongside another kubelet but not alongside another proxy
   environment:
     - "affinity:container==*kubelet*"
+    - "affinity:container!=*proxy*"
