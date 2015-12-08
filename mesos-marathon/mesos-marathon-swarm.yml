@@ -1,0 +1,48 @@
+zookeeper:
+  image: garland/zookeeper
+  container_name: zookeeper
+  ports:
+   - "2181:2181"
+   - "2888:2888"
+   - "3888:3888"
+  environment:
+   - "constraint:node==*swarm-master*"
+
+mesosmaster:
+  image: mesosphere/mesos-master:0.25.0-0.2.70.ubuntu1404
+  container_name: mesosmaster
+  ports:
+   - "5050:5050"
+  environment:
+   - MESOS_ZK=zk://zookeeper:2181/mesos
+   - MESOS_LOG_DIR=/var/log/mesos
+   - MESOS_QUORUM=1
+   - MESOS_REGISTRY=in_memory
+   - MESOS_WORK_DIR=/var/lib/mesos
+   - "constraint:node==*swarm-master*"
+
+marathon:
+  image: mesosphere/marathon
+  container_name: marathon
+  command: --master zk://zookeeper:2181/mesos --zk zk://zookeeper:2181/marathon
+  ports:
+   - "8080:8080"
+  environment:
+   - "constraint:node==*swarm-master*"
+
+mesosslave:
+  image: mesosphere/mesos-slave:0.25.0-0.2.70.ubuntu1404
+  # no container name because then mesosslaves can't be scaled
+  volumes:
+   - /usr/local/bin/docker:/bin/docker
+   - /var/run/docker.sock:/var/run/docker.sock
+  ports:
+   - "5051:5051"
+  command: ['--containerizers=docker']
+  environment:
+   - MESOS_MASTER=zk://zookeeper:2181/mesos
+   - MESOS_LOG_DIR=/var/log/mesos
+   - MESOS_LOGGING_LEVEL=INFO
+   - "affinity:container!=*zookeeper*"
+   - "affinity:container!=*mesosslave*"
+
