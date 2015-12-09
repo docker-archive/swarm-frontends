@@ -2,23 +2,9 @@
 
 This folder contains a sample `compose.yml` file describing a Kubernetes deployment. It is not meant to be used in a production cluster but shows how easy it is to create and scale a Kubernetes cluster on top of Swarm.
 
-The rationale behind this is that Swarm is lightweight enough to deploy additional orchestration tools on top. You begin with the regular docker experience and you can enhance this by adding orchestration/schedulers on top (`kubernetes`/`nomad`), etc.
-
 Using Kubernetes on top of Swarm has many advantages: You can now use the *Replication Controller* alongside the *Pod* concept. Try to `rm` a container deployed with Kubernetes using Swarm, it will be still running thanks to Kubernetes.
 
-Nice addition is that you can use the regular docker commands against the Kubernetes cluster: `inspect`/`logs`/`attach`, etc.
-
-## Prerequisites
-
-- Master version of Docker Compose: (see [Issue #2334](https://github.com/docker/compose/pull/2334))
-
-- Latest version of Swarm: `1.0.0`
-
-- Point Compose to the Swarm cluster if not local by setting `DOCKER_HOST`, `DOCKER_TLS_VERIFY`, `DOCKER_CERT_PATH` appropriately
-
-- An *etcd, consul* or *zookeeper* cluster running for the overlay networking feature (this is not mandatory, the compose file can be tweaked to not use it but it's a nice addition to deploy across cloud providers).
-
-See the [networking documentation](https://docs.docker.com/engine/userguide/networking/get-started-overlay/) to setup docker to use the Multi-Host networking features.
+As noted previously, a nice benefit is that you can use the regular docker commands against the Kubernetes cluster: `inspect`/`logs`/`attach`, etc.
 
 ## Usage
 
