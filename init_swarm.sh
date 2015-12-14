@@ -1,3 +1,4 @@
+#!/bin/bash
 # initialize docker
 echo "----- Initialize environment -----"
 eval $(docker-machine env default)
