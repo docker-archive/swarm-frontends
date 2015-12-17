@@ -14,11 +14,11 @@ To deploy your cluster, use:
 
 You'll see logs from all the containers being deployed.
 
-Modify your `.kube/config` to point to your kubernetes cluster. To do this, type `docker ps` and fetch the IP and port exposed from the `apiserver`.
-
 You can then list nodes using:
 
-`kubectl get nodes`
+`kubectl -s $(docker port apiserver 8080) get nodes`
+
+You can omit the `-s` flag if you modify your `kube/config` to point to your kubernetes cluster.
 
 ## Scale
 
