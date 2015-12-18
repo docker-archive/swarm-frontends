@@ -1,3 +1,4 @@
+#!/bin/bash
 docker-machine rm mh-keystore
 docker-machine rm swarm-master
 docker-machine rm swarm-node-01
