@@ -1,16 +1,13 @@
 #!/bin/bash
-# initialize docker
-echo "----- Initialize environment -----"
-eval $(docker-machine env default)
+
+set -e
 
 # create network
 echo "----- Setup machine to deploy the key-value store -----"
 docker-machine create -d virtualbox mh-keystore
 
 echo "----- Start consul -----"
-docker $(docker-machine config mh-keystore) run -d -p "8500:8500" -h "consul" progrium/consul -server -bootstrap
-
-eval $(docker-machine env mh-keystore)
+docker $(docker-machine config mh-keystore) run -d -p "8500:8500" --name="consul" -h "consul" progrium/consul -server -bootstrap
 
 echo "----- create a machine with the swarm master -----"
 docker-machine create -d virtualbox --swarm --swarm-master \
@@ -70,5 +67,3 @@ echo " "
 echo "---- ---------------- -----"
 echo "---- Ready to deploy  -----"
 echo "---- ---------------- -----"
-
-
