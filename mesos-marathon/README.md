@@ -19,7 +19,7 @@ Run `docker ps` to find the ip addresses of the marathon and mesos containers. Y
 
 To scale mesos-slave instances you can now use:
 
-`docker-compose --x-networking -f mesos-marathon-swarm.yml scale messoslave=4`
+`docker-compose --x-networking -f mesos-marathon-swarm.yml scale mesosslave=4`
 
 New nodes show up in the Mesos dashboard as expected.
 
