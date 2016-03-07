@@ -10,7 +10,7 @@ As noted previously, a nice benefit is that you can use the regular docker comma
 
 To deploy your cluster, use:
 
-`docker-compose --x-networking -f k8s-swarm.yml up`
+`docker-compose -f k8s-swarm.yml up`
 
 You'll see logs from all the containers being deployed.
 
@@ -24,7 +24,7 @@ You can omit the `-s` flag if you modify your `kube/config` to point to your kub
 
 To scale the kubelet instances you can now use:
 
-`docker-compose --x-networking -f k8s-swarm.yml scale kubelet=2 proxy=2`
+`docker-compose -f k8s-swarm.yml scale kubelet=2 proxy=2`
 
 If you list nodes with `kubectl get nodes` you'll see the added node in the cluster
 
