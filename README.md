@@ -23,3 +23,7 @@ To simplify your setup, we have some helper files for setting up virtualbox VMs 
 - Use `cleanup_swarm.sh` to clean up the VMs created
 
 
+## Copyright and license
+
+Copyright © 2015 Docker, Inc. swarm-frontends is licensed under the Apache License,
+Version 2.0. See [LICENSE](LICENSE) for the full license text.
