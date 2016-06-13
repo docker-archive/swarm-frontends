@@ -10,8 +10,11 @@ As noted previously, a nice benefit is that you can use the regular docker comma
 
 To deploy your cluster, use:
 
-`docker-compose -f k8s-swarm.yml up`
-
+```
+eval $(docker-machine env --swarm swarm-master)
+docker-compose -f k8s-swarm.yml up -d
+```
+ 
 You'll see logs from all the containers being deployed.
 
 You can then list nodes using:
