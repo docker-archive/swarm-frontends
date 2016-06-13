@@ -17,6 +17,7 @@ See the [networking documentation](https://docs.docker.com/engine/userguide/netw
 
 To simplify your setup, we have some helper files for setting up virtualbox VMs with Swarm on your machine:
 - Prerequisite: you have installed [Docker Toolbox](https://www.docker.com/docker-toolbox)
+- Choose your docker machine driver. by default it was virtualbox, you can set driver by `export DOCKER_MACHINE_DRIVER=amazonec2`
 - `init_swarm.sh` sets up a 6 node Swarm cluster (1 master, 5 agents) using [docker-machine](https://docs.docker.com/machine/) and [VirtualBox](https://www.virtualbox.org/).
 - Setup your environment variables: `eval $(docker-machine env --swarm swarm-master)`
 - Follow instructions in the appropriate directory (kubernetes or mesos-marathon) to run Docker Compose to setup and scale your containerized application
