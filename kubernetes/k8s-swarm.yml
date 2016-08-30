@@ -15,12 +15,16 @@ services:
   controller:
     image: gcr.io/google_containers/hyperkube:v1.2.4
     command: ["/hyperkube", "controller-manager", "--address=0.0.0.0", "--master=http://apiserver:8080", "--v=2"]
+    depends_on: 
+      - apiserver
     environment:
       - "affinity:container==*apiserver*"
 
   scheduler:
     image: gcr.io/google_containers/hyperkube:v1.2.4
     command: ["/hyperkube", "scheduler", "--address=0.0.0.0", "--master=http://apiserver:8080", "--v=2"]
+    depends_on: 
+      - apiserver
     environment:
       - "affinity:container==*apiserver*"
 
@@ -45,6 +49,9 @@ services:
     command: ['/hyperkube', 'proxy', '--master=http://apiserver:8080', '--conntrack-max=0', '--v=2']
     privileged: true
     # A proxy should run alongside another kubelet but not alongside another proxy
+    depends_on: 
+      - kubelet
     environment:
       - "affinity:container==*kubelet*"
       - "affinity:container!=*proxy*"
+
